@@ -50,9 +50,9 @@ async def main():
 
 asyncio.run(main())
 
-# time.sleep(1)
-# os.system('cls' if os.name=='nt' else 'clear')
-# print('physical memory useD:',)
+time.sleep(3)
+os.system('cls' if os.name=='nt' else 'clear')
+print('physical memory useD:',)
 
 
 
