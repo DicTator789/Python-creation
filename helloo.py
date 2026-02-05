@@ -19,16 +19,13 @@ ram_usage = psutil.virtual_memory().percent
 print('RAM usage : ',ram_usage)
 
 disk_usage = psutil.disk_usage('/')
-print('Disk usage : ',disk_usage.percent)
+print('Disk usage current drive : ',disk_usage.percent)
 
 disk_partition = psutil.disk_partitions()
-print('Disk partition : ',disk_partition)
 
+#all the disk usage
+for part in disk_partition:
 
-import psutil
-
-for part in psutil.disk_partitions():
-    
     usage = psutil.disk_usage(part.mountpoint)
     print(part.device, usage.percent)
 
