@@ -24,14 +24,16 @@ def parser(file_path):
             file_name = os.path.basename(file_path)   #gets the file name from the path itself
             # print(file_name)
             with open(file_name, "r") as file:
-                for line in file:
-                    if line.startswith("{") or line.endswith("}"):
-                        continue
-                    if line.strip():                      #strip() returns the string so if line.strip = "" it will be false
-                        # print(line.replace('"','').replace(",","").replace(" ","").strip())
-                        key, value = line.replace('"','').replace(",","").replace(" ","").strip().split(":")
-                        config[key] = value
-            print(config)
+                config = json.load(file)
+
+                # for line in file:
+                #     if line.startswith("{") or line.endswith("}"):
+                #         continue
+                #     if line.strip():                      #strip() returns the string so if line.strip = "" it will be false
+                #         # print(line.replace('"','').replace(",","").replace(" ","").strip())
+                #         key, value = line.replace('"','').replace(",","").replace(" ","").strip().split(":")
+                #         config[key] = value
+            # print(config)
             return config
         else:
             raise config_Parser_Error("Path exist but File doesn't")
@@ -90,10 +92,10 @@ def validate_config(config):
 # Print "Configuration loaded successfully"
 # Return usable config dictionary
 
-
-config_checker = parser("D:\\Moltbot\\config.json")
-
-print(type(config_checker))
-if validate_config(config_checker): 
-    print("Configuration loaded successfully")
+try:
+    config_checker = parser("D:\\Moltbot\\config.json")
+    if validate_config(config_checker): 
+        print("Configuration loaded successfully")
+except Exception as e:
+    print(e)
 
