@@ -71,3 +71,27 @@ Account_1.deposit(1220)
 Account_1.check_balance()
 Account_1.withdraw(15000)
 Account_1.check_balance()
+
+
+
+#3 
+
+class employee:
+    
+    def __init__(self, name, salary):
+        self.name = name
+        self.salary = salary
+    
+    def display_salary(self):
+        print(f"{self.name} has {self.salary}")
+
+class manager(employee):
+    def approve_leave(self):
+        print(f"{self.name} has been approved for leave")
+
+
+Emp1 = employee("Rohit", 15000)
+Emp1.display_salary()
+
+Manager1 = manager("Rohit2", 1000)
+Manager1.approve_leave()
