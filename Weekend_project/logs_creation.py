@@ -49,7 +49,7 @@ async def main():
     pid = os.getpid()
     python_process = round(psutil.Process(pid).memory_info()[0]/2**30,2)
     print('Memory used by this python script in GB : ',python_process,'GB')
-    await check("Memory",python_process)
+    # await check("Memory",python_process)
 
     #CPU usage
     cpu_usage = psutil.cpu_percent(interval=1)

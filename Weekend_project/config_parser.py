@@ -20,6 +20,7 @@ def parser(file_path):
     config = {}
     try:
         checker =str(pathlib.Path(file_path).parent.resolve())
+        # print(checker)
         if(checker in file_path):    # left operand should be string so we converted it to string
             file_name = os.path.basename(file_path)   #gets the file name from the path itself
             # print(file_name)

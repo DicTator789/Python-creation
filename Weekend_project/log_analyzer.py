@@ -2,15 +2,44 @@
 from collections import defaultdict
 import re
 
-# DICTIONARY TO COLLECT LOGS AND COUNT 
 
-logs_count = defaultdict(lambda : {
-    "messages": {},    #selected as dictionary
-    "total": 0    
-    })
+class log_analyzer:
+    def __init__(self,file_path):
+        self.pattern = r"\x1b\[[0-9;]*m" 
+        # DICTIONARY TO COLLECT LOGS AND COUNT 
+        self.logs_count = defaultdict(lambda : {
+            "messages": {},    #selected as dictionary
+            "total": 0    
+            })
+        self.file_path = file_path
+
+
+
+    def process_logs(self):
+        with open(self.file_path, "r") as file2:
+            for line in file2:
+                # self.pattern = r"\x1b\[[0-9;]*m" 
+                clean_line = re.sub(self.pattern,"",line).strip()  # cleans pattern from lin
+
+                if not clean_line:    # clean blank spcases or empty sentences
+                    continue
+
+                self.lines_in_list = clean_line.rsplit(" - ",2)  #splt from right with only 3 entries
+
+                self.level = self.lines_in_list[1]   #info warning critical
+                
+                self.message = self.lines_in_list[2].split("(")[0].strip()    #message of logs\
+
+                self.logs_count[self.level]["total"]+=1
+
+                if self.message not in self.logs_count[self.level]["messages"].values():
+                    self.count = len(self.logs_count[self.level]["messages"])+1
+                    self.logs_count[self.level]["messages"][self.count]= self.message
+
+        return self.logs_count
 # seen_messages = defaultdict(set)
 
-pattern = r"\x1b\[[0-9;]*m" 
+# pattern = r"\x1b\[[0-9;]*m" 
 # with open("app.log", "r") as file:
 #     for line in file:
 #         # print(line.splitlines()[-1].rsplit("-",2))   #If rsplit is specified, the list will have the maximum of rsplit+1 items
@@ -37,30 +66,30 @@ pattern = r"\x1b\[[0-9;]*m"
 
 #second method with the rsplit
 
-with open("app.log", "r") as file2:
-    for line in file2:
+# with open("app.log", "r") as file2:
+#     for line in file2:
 
-        clean_line = re.sub(pattern,"",line).strip()  # cleans pattern from lin
+#         clean_line = re.sub(pattern,"",line).strip()  # cleans pattern from lin
 
-        if not clean_line:    # clean blank spcases or empty sentences
-            continue
+#         if not clean_line:    # clean blank spcases or empty sentences
+#             continue
 
-        lines_in_list = clean_line.rsplit(" - ",2)  #splt from right with only 3 entries
+#         lines_in_list = clean_line.rsplit(" - ",2)  #splt from right with only 3 entries
 
-        level = lines_in_list[1]   #info warning critical
+#         level = lines_in_list[1]   #info warning critical
         
-        message = lines_in_list[2].split("(")[0].strip()    #message of logs\
+#         message = lines_in_list[2].split("(")[0].strip()    #message of logs\
 
-        logs_count[level]["total"]+=1
+#         logs_count[level]["total"]+=1
 
-        if message not in logs_count[level]["messages"].values():
-            count = len(logs_count[level]["messages"])+1
-            logs_count[level]["messages"][count]=message
+#         if message not in logs_count[level]["messages"].values():
+#             count = len(logs_count[level]["messages"])+1
+#             logs_count[level]["messages"][count]=message
 
-# print(logs_count.values())
-for level, inner in logs_count.items():
-    for key, value in inner.items():
-        print(level, key, value)
+# # print(logs_count.values())
+# for level, inner in logs_count.items():
+#     for key, value in inner.items():
+#         print(level, key, value)
 
 
 
